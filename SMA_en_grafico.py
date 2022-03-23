@@ -15,6 +15,14 @@ ax.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold
 ax.set_ylabel("Precios")
 df.plot(ax=ax)
 
+#size dibujo
+anchoDibujo = int(df['Close'].size)
 fig.set_figheight(10)
-fig.set_figwidth(50)
+fig.set_figwidth(anchoDibujo)
+
+#Lineas
+plt.hlines(y=4500,  xmin=0, xmax=anchoDibujo, colors='green', linestyles='solid')
+plt.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyles='solid')
+
+plt.grid()
 plt.show()
