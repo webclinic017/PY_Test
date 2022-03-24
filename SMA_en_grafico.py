@@ -5,21 +5,23 @@ import matplotlib.pyplot as plt
 #Lectura de csv
 df = pd.read_csv('price.csv')
 
-#df['CloseMax'] = df['Close'] + 1000
-#print(df.head())
-
 # Calculo SMA
 sma_20=int(20)
-df['sma_price'] = df['Close'].rolling(window=sma_20).mean()
+df['SMA_price'] = df['Close'].rolling(window=sma_20).mean()
 # print(df.head())   #check primeros values
 # print(sma_price.tail())  #check ultimos values
 
 # Plot de df
 fig, ax = plt.subplots()
-ax.plot(df['Date'], df['Close'], df['sma_price'], marker='*')
+ax.plot(df['Date'], df['Close'], marker='*', label='Price Cripto', color='blue') #color='blue'
+ax.plot(df['SMA_price'], marker='.', label='SMA Cripto', color='orange') #color='orange'
+
 ax.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
 ax.set_ylabel("Precios")
-df.plot(ax=ax)  #referencias de lineas
+
+#Referencias de lineas
+ax.legend(loc='best')
+# df.plot(ax=ax)
 
 #size dibujo
 anchoDibujo = int(df['Close'].size)
@@ -27,8 +29,8 @@ fig.set_figheight(10)
 fig.set_figwidth(anchoDibujo)
 
 #Lineas
-plt.hlines(y=4000,  xmin=0, xmax=anchoDibujo, colors='green', linestyles='solid')
-plt.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyles='solid')
+plt.hlines(y=4000,  xmin=0, xmax=anchoDibujo, colors='green', linestyles='dotted')
+plt.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyles='dotted')
 
 #Rotacion de labels
 plt.xticks(rotation=90)
