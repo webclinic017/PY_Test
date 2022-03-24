@@ -29,8 +29,8 @@ fig.set_figheight(10)
 fig.set_figwidth(anchoDibujo)
 
 #Lineas
-plt.hlines(y=4000,  xmin=0, xmax=anchoDibujo, colors='green', linestyles='dotted')
-plt.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyles='dotted')
+plt.hlines(y=4000,  xmin=0, xmax=anchoDibujo, colors='green', linestyles='dotted', linewidth=2)
+plt.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyles='dotted', linewidth=2)
 
 #Rotacion de labels
 plt.xticks(rotation=90)
