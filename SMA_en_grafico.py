@@ -13,8 +13,8 @@ df['SMA_price'] = df['Close'].rolling(window=sma_20).mean()
 
 # Plot de df
 fig, ax = plt.subplots()
-ax.plot(df['Date'], df['Close'], marker='*', label='Price Cripto', color='blue') #color='blue'
-ax.plot(df['SMA_price'], marker='.', label='SMA Cripto', color='orange') #color='orange'
+ax.plot(df['Date'], df['Close'], marker='*', label='Price Cripto', linestyle='solid', linewidth=3, color='#0091FF')
+ax.plot(df['SMA_price'], marker='.', label='SMA Cripto', linestyle='solid', linewidth=3, color='#FF5A17')
 
 ax.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
 ax.set_ylabel("Precios")
@@ -29,8 +29,8 @@ fig.set_figheight(10)
 fig.set_figwidth(anchoDibujo)
 
 #Lineas
-plt.hlines(y=4000,  xmin=0, xmax=anchoDibujo, colors='green', linestyles='dotted', linewidth=2)
-plt.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyles='dotted', linewidth=2)
+plt.hlines(y=4000,  xmin=0, xmax=anchoDibujo, colors='green', linestyle='dotted', linewidth=2)
+plt.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyle='dotted', linewidth=2)
 
 #Rotacion de labels
 plt.xticks(rotation=90)
