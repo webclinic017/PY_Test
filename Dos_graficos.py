@@ -11,7 +11,6 @@ df['SMA_price'] = df['Close'].rolling(window=sma_20).mean()
 # print(df.head())   #check primeros values
 # print(sma_price.tail())  #check ultimos values
 
-
 # Plot de DataFrames
 fig, (ax1, ax2) = plt.subplots(2, 1)
 
@@ -34,8 +33,8 @@ fig.set_figheight(10)
 fig.set_figwidth(anchoDibujo)
 
 #Lineas
-plt.hlines(y=4000,  xmin=0, xmax=anchoDibujo, colors='green', linestyle='dotted', linewidth=2)
-plt.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyle='dotted', linewidth=2)
+ax1.hlines(y=4000,  xmin=0, xmax=anchoDibujo, colors='green', linestyle='dotted', linewidth=2)
+ax1.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyle='dotted', linewidth=2)
 
 #Rotacion de labels
 plt.xticks(rotation=90)
