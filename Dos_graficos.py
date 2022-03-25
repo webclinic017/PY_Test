@@ -36,12 +36,13 @@ anchoDibujo = int(df['Close'].size)
 fig.set_figheight(10)
 fig.set_figwidth(anchoDibujo)
 
-#Lineas
+#Hlines solo para grafico ax1
 ax1.hlines(y=4000,  xmin=0, xmax=anchoDibujo, colors='green', linestyle='dotted', linewidth=2)
 ax1.hlines(y=3000,  xmin=0, xmax=anchoDibujo, colors='red', linestyle='dotted', linewidth=2)
 
 #Rotacion de labels
 plt.xticks(rotation=90)
+
 
 plt.grid()
 plt.show()
