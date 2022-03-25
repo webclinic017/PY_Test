@@ -7,7 +7,10 @@ df = pd.read_csv('price.csv')
 
 # Calculo SMA
 sma_20=int(20)
-df['SMA_price'] = df['Close'].rolling(window=sma_20).mean()
+df['SMA_20_price'] = df['Close'].rolling(window=sma_20).mean()
+
+sma_10=int(10)
+df['SMA_10_price'] = df['Close'].rolling(window=sma_10).mean()
 # print(df.head())   #check primeros values
 # print(sma_price.tail())  #check ultimos values
 
@@ -16,9 +19,10 @@ fig, (ax1, ax2) = plt.subplots(2, 1)
 
 ax1 = plt.subplot(211) #filas: 2, Columnas: 1, Ubicacion 1 fila)
 ax1.plot(df['Date'], df['Close'], marker='*', label='Price Cripto', linestyle='solid', linewidth=3, color='#0091FF')
+ax1.plot(df['Date'], df['SMA_20_price'], marker='*', label='SMA 20', linestyle='solid', linewidth=3, color='#FF5A17')
 
 ax2 = plt.subplot(212, sharex=ax1) #filas: 2, Columnas: 1, Ubicacion 2 fila)
-ax2.plot(df['SMA_price'], marker='.', label='SMA Cripto', linestyle='solid', linewidth=3, color='#FF5A17')
+ax2.plot(df['SMA_10_price'], marker='.', label='SMA 10', linestyle='solid', linewidth=3, color='#FF5A17')
 
 ax1.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
 ax1.set_ylabel("Precios")
