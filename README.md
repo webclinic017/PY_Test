@@ -1,5 +1,3 @@
-# PY_Test
-
 *** Python3 en test  ->  git clone https://github.com/JulioMartin/PY_Test
 
 https://askubuntu.com/questions/262063/how-to-find-python-installation-directory-on-ubuntu
