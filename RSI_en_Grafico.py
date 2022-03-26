@@ -19,6 +19,7 @@ df['SMA_Lenta'] = talib.SMA(df['HL_div_2'], timeperiod=sma_lenta)
 # # Calculo RSI
 rsi_periodo=int(16)
 df['RSI'] =  talib.RSI(df['HL_div_2'], timeperiod=rsi_periodo)
+df['SMA_RSI'] =  talib.SMA(df['RSI'], timeperiod=rsi_periodo)
 # # print(df.head())   #check primeros values
 # # print(sma_price.tail())  #check ultimos values
 
@@ -31,7 +32,8 @@ ax1.plot(df['Date'], df['SMA_Rapida'], marker='*', label='SMA Rapida', linestyle
 ax1.plot(df['Date'], df['SMA_Lenta'], marker='*', label='SMA Lenta', linestyle='solid', linewidth=2, color='#FF5A17')
 
 ax2 = plt.subplot(212, sharex=ax1) #filas: 2, Columnas: 1, Ubicacion 2 fila)
-ax2.plot(df['RSI'], marker='.', label='RSI', linestyle='solid', linewidth=3, color='blue')
+ax2.plot(df['RSI'], marker='.', label='RSI', linestyle='solid', linewidth=3, color='green')
+ax2.plot(df['SMA_RSI'], marker='.', label='RSI', linestyle='solid', linewidth=3, color='red')
 
 ax1.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
 ax1.set_ylabel("Precios")
@@ -46,8 +48,8 @@ fig.set_figheight(10)
 fig.set_figwidth(anchoDibujo)
 
 #Hlines solo para grafico ax1
-ax1.hlines(y=3400,  xmin=0, xmax=anchoDibujo, colors='green', linestyle='dotted', linewidth=2)
-ax1.hlines(y=2500,  xmin=0, xmax=anchoDibujo, colors='red', linestyle='dotted', linewidth=2)
+ax2.hlines(y=30,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
+ax2.hlines(y=78,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
 
 #Ocultar "escala x" en ax1
 ax1.xaxis.set_visible(False)
