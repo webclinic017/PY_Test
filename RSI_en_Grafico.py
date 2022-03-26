@@ -6,7 +6,7 @@ import talib
 #Lectura de csv
 df = pd.read_csv('price.csv')
 df['HL_div_2'] = (df['High']+df['Low'])/2
-print(df['HL_div_2'].head())
+#print(df['HL_div_2'].head())
 
 # Calculo SMAs
 size_sma_min=int(3)
@@ -17,8 +17,8 @@ sma_lenta=int(6)
 df['SMA_Lenta'] = talib.SMA(df['HL_div_2'], timeperiod=sma_lenta)
 
 # # Calculo RSI
-# rsi_10=int(10)
-# df['RSI'] =  talib.RSI(df['Close'], timeperiod=rsi_10)
+rsi_periodo=int(16)
+df['RSI'] =  talib.RSI(df['HL_div_2'], timeperiod=rsi_periodo)
 # # print(df.head())   #check primeros values
 # # print(sma_price.tail())  #check ultimos values
 
@@ -31,7 +31,7 @@ ax1.plot(df['Date'], df['SMA_Rapida'], marker='*', label='SMA Rapida', linestyle
 ax1.plot(df['Date'], df['SMA_Lenta'], marker='*', label='SMA Lenta', linestyle='solid', linewidth=2, color='#FF5A17')
 
 ax2 = plt.subplot(212, sharex=ax1) #filas: 2, Columnas: 1, Ubicacion 2 fila)
-ax2.plot(df['SMA_Lenta'], marker='.', label='SMA Lenta', linestyle='solid', linewidth=3, color='green')
+ax2.plot(df['RSI'], marker='.', label='RSI', linestyle='solid', linewidth=3, color='blue')
 
 ax1.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
 ax1.set_ylabel("Precios")
