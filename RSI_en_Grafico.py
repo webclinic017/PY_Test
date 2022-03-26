@@ -35,6 +35,13 @@ ax2 = plt.subplot(212, sharex=ax1) #filas: 2, Columnas: 1, Ubicacion 2 fila)
 ax2.plot(df['RSI'], marker='.', label='RSI', linestyle='solid', linewidth=3, color='green')
 ax2.plot(df['SMA_RSI'], marker='.', label='RSI', linestyle='solid', linewidth=3, color='red')
 
+#Hlines grafico
+anchoDibujo = int(df['Close'].size)
+ax2.hlines(y=30,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
+ax2.hlines(y=50,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
+ax2.hlines(y=70,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
+
+
 ax1.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
 ax1.set_ylabel("Precios")
 
@@ -43,13 +50,8 @@ ax1.legend(loc='best')
 ax2.legend(loc='best')
 
 #size dibujo
-anchoDibujo = int(df['Close'].size)
 fig.set_figheight(10)
 fig.set_figwidth(anchoDibujo)
-
-#Hlines solo para grafico ax1
-ax2.hlines(y=30,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
-ax2.hlines(y=78,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
 
 #Ocultar "escala x" en ax1
 ax1.xaxis.set_visible(False)
