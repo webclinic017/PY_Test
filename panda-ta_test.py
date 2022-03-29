@@ -58,7 +58,7 @@ def calcula_ADX():#{
     length_DI = int(16)
     lensig_ADX = int(16)
     df_res = ta_trend.adx(high=high_column, low=low_column, close=hl2_column, length=length_DI, lensig=lensig_ADX)
-    print("*** ADX: \n ", df_res)
+    print("*** ADX: \n ", df_res )
 
 #}
 
