@@ -14,10 +14,22 @@ def calcula_SMA():
 
     df['HL_div_2'] = (df['High']+df['Low'])/2
 
-    sma_rapida=int(3)
-    df['SMA_rapida'] = df.ta.sma(length=sma_rapida, offset=None, close="HL_div_2") # "key close" "value:open"
+    sma_periodo = int(3)
+    df['SMA'] = df.ta.sma(length=sma_periodo, offset=None, close="HL_div_2") # "key close" "value:open"
 
-    print("*** SMA_rapida: \n ", df['SMA_rapida'])
+    print("*** SMA: \n ", df['SM'])
+
+
+def calcula_RSI():
+    df = pd.read_csv('price.csv')
+    df['HL_div_2'] = (df['High']+df['Low'])/2
+
+    rsi_periodo = int(16)
+    df['RSI'] = df.ta.rsi(length=rsi_periodo, close='HL_div_2') # "key close" "value:open"
+
+    print("*** SMA: \n ", df['RSI'])
+
 
 # main
 # calcula_SMA()
+calcula_RSI()
