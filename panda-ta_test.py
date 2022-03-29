@@ -44,10 +44,30 @@ def calcula_STOCH():#{
     #high, low, close, k=None, d=None, smooth_k=None
     df_res = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k, d=slow_d, smooth_k=smooth)
     print("*** STOCH_K: \n ", df_res)
+#}
+
+def calcula_ADX():#{
+    df = pd.read_csv('price.csv')
+    df['HL2'] = ta_overlap.hl2(high=df['High'], low=df['Low'])
+    print("*** HL2: \n", df['HL2'])
+
+    # #k:100 d:10 smooth:2
+    # fast_k = int(10) #100
+    # slow_d = int(3)  #10
+    # smooth = int(2)
+    #
+    # high_column = df.get('High')
+    # low_column = df.get('Low')
+    # hl2_column = df.get('HL2')
+    #
+    # df.ta.stoch
+    # df_res = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k, d=slow_d, smooth_k=smooth)
+    # print("*** STOCH_K: \n ", df_res)
 
 #}
 
 # main
-calcula_SMA()
+#calcula_SMA()
 #calcula_RSI()
 #calcula_STOCH()
+calcula_ADX()
