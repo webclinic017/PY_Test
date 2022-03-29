@@ -11,16 +11,18 @@ def calcula_SMA():#{
     df['HL_div_2'] = (df['High']+df['Low'])/2
 
     sma_periodo = int(3)
-    df['SMA'] = ta_overlap.sma(close=df['HL_div_2'], length=sma_periodo, talib=True)
-    print("*** SMA: \n ", df['SMA'])
+    df_res = ta_overlap.sma(close=df['HL_div_2'], length=sma_periodo, talib=True)
+    print("*** SMA: \n ", df_res)
 #}
 
 def calcula_RSI():#{
     df = pd.read_csv('price.csv')
     df['HL_div_2'] = (df['High']+df['Low'])/2
+
     rsi_periodo = int(16)
-    df['RSI'] = df.ta.rsi(length=rsi_periodo, close='HL_div_2') # "key close" "value:open"
-    print("*** SMA: \n ", df['RSI'])
+    #df['RSI'] = df.ta.rsi(length=rsi_periodo, close='HL_div_2') # "key close" "value:open"
+    df_res = ta_momentum.rsi(close=df['HL_div_2'], length=rsi_periodo, scalar=None, talib=True)
+    print("*** RSI: \n ", df_res)
 #}
 
 def calcula_STOCH():#{
