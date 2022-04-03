@@ -8,7 +8,6 @@ import pandas_ta.trend as ta_trend
 #Lectura de csv
 df = pd.read_csv('price.csv')
 df['HL2'] = (df['High']+df['Low'])/2
-
 df.index = pd.DatetimeIndex(df['Date'])
 
 # Calculo SMAs
@@ -36,7 +35,6 @@ ax2 = fig.add_subplot(2,1,2, sharex=ax1, style='binance')
 ap = [ mpf.make_addplot(df[['RSI','SMA_RSI']],type='line', ax=ax2, ylabel=''),
        mpf.make_addplot(df[['SMA_Rapida','SMA_Lenta']], type='line', ax=ax1, ylabel='')
      ]
-
 
 # Segundo grafico
 #Hlines grafico
