@@ -66,7 +66,7 @@ ax1.grid(),ax2.grid()
 
 
 # Plot grafico
-mpf.plot(df, type='candle', ax=ax1, addplot=ap, xrotation=90)
+mpf.plot(df, type='candle', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d')
 mpf.show()
 
 
