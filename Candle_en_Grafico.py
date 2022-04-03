@@ -28,8 +28,8 @@ df['SMA_RSI'] = ta_overlap.sma(close=df['RSI'], length=rsi_periodo, talib=True)
 
 # Plot de DataFrames
 fig = mpf.figure()
-ax1 = fig.add_subplot(2,1,1, style='yahoo')
-ax2 = fig.add_subplot(2,1,2, sharex=ax1, style='yahoo')
+ax1 = fig.add_subplot(2,1,1, style='binance')
+ax2 = fig.add_subplot(2,1,2, sharex=ax1, style='binance')
 
 #ax1.plot(df['Date'], df['Close'], marker='*', label='Price Cripto', linestyle='solid', linewidth=3, color='#0091FF')
 
