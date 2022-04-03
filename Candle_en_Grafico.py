@@ -28,10 +28,14 @@ df['SMA_RSI'] = ta_overlap.sma(close=df['RSI'], length=rsi_periodo, talib=True)
 
 # Plot de DataFrames
 fig = mpf.figure()
-
 ax1 = fig.add_subplot(2,1,1,style='yahoo')
-mpf.plot(df,type='candle',ax=ax1,axtitle='yahoo',xrotation=15)
+
+#mpf.plot(df,type='candle',ax=ax1,axtitle='Price Cripto',xrotation=15)
 #ax1.plot(df['Date'], df['Close'], marker='*', label='Price Cripto', linestyle='solid', linewidth=3, color='#0091FF')
+
+#ax2 = ax1.twinx()
+ap = mpf.make_addplot(df[['SMA_Rapida','SMA_Lenta']],ax=ax1,ylabel='SMAs')
+mpf.plot(df,ax=ax1,addplot=ap,xrotation=10,type='candle')
 
 mpf.show()
 
@@ -40,12 +44,6 @@ mpf.show()
 # ax1.plot(df['Date'], df['SMA_Rapida'], marker='*', label='SMA Rapida', linestyle='solid', linewidth=2, color='green')
 # ax1.plot(df['Date'], df['SMA_Lenta'], marker='*', label='SMA Lenta', linestyle='solid', linewidth=2, color='#FF5A17')
 
-
-
-#
-#
-#
-#
 #
 # # Segundo grafico
 # ax2 = plt.subplot(212, sharex=ax1) #filas: 2, Columnas: 1, Ubicacion 2 fila)
