@@ -1,15 +1,9 @@
 
-# https://www.statology.org/matplotlib-python-candlestick-chart/
+# Candles usando matplotlib.pyplot:  https://www.statology.org/matplotlib-python-candlestick-chart/
+# Candles usando mplfinance: https://github.com/matplotlib/mplfinance#usage
 
 import pandas as pd
 import matplotlib.pyplot as plt
-
-# #create DataFrame
-# prices = pd.DataFrame({'open': [25, 22, 21, 19, 23, 21, 25, 29],
-#                        'close': [24, 20, 17, 23, 22, 25, 29, 31],
-#                        'high': [28, 27, 29, 25, 24, 26, 31, 37],
-#                        index=pd.date_range("2021-01-01", periods=8, freq="d"))
-#                        'low': [22, 16, 14, 17, 19, 18, 22, 26]},
 
 #Lectura de csv
 df = pd.read_csv('price.csv')
