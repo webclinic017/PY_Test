@@ -33,9 +33,8 @@ ax1 = fig.add_subplot(2,1,1,style='yahoo')
 #mpf.plot(df,type='candle',ax=ax1,axtitle='Price Cripto',xrotation=15)
 #ax1.plot(df['Date'], df['Close'], marker='*', label='Price Cripto', linestyle='solid', linewidth=3, color='#0091FF')
 
-#ax2 = ax1.twinx()
 ap = mpf.make_addplot(df[['SMA_Rapida','SMA_Lenta']],ax=ax1,ylabel='SMAs')
-mpf.plot(df,ax=ax1,addplot=ap,xrotation=10,type='candle')
+mpf.plot(df, type='candle', ax=ax1, addplot=ap, xrotation=10, axtitle='Price Cripto')
 
 mpf.show()
 
