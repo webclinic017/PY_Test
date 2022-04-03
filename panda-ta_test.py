@@ -64,7 +64,7 @@ def calcula_ADX():#{
 #}
 
 # main
-#calcula_SMA()
+calcula_SMA()
 #calcula_RSI()
 #calcula_STOCH()
-calcula_ADX()
+#calcula_ADX()
