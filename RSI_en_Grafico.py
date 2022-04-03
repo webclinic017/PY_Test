@@ -1,27 +1,29 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
-import talib
+import pandas_ta.overlap as ta_overlap
+import pandas_ta.momentum as ta_momentum
+import pandas_ta.trend as ta_trend
 
 #Lectura de csv
 df = pd.read_csv('price.csv')
-df['HL_div_2'] = (df['High']+df['Low'])/2
-#print(df['HL_div_2'].head())
+df['HL2'] = (df['High']+df['Low'])/2
+#print(df['HL2'].head())
 
 # Calculo SMAs
 size_sma_min=int(3)
 sma_rapida=int(3)
-df['SMA_Rapida'] = talib.SMA(df['HL_div_2'], timeperiod=sma_rapida)
+df['SMA_Rapida'] = ta_overlap.sma(close=df['HL2'], length=sma_rapida, talib=True)
 
 sma_lenta=int(6)
-df['SMA_Lenta'] = talib.SMA(df['HL_div_2'], timeperiod=sma_lenta)
+df['SMA_Lenta'] = ta_overlap.sma(close=df['HL2'], length=sma_lenta, talib=True)
 
 # # Calculo RSI
 rsi_periodo=int(16)
-df['RSI'] =  talib.RSI(df['HL_div_2'], timeperiod=rsi_periodo)
-df['SMA_RSI'] =  talib.SMA(df['RSI'], timeperiod=rsi_periodo)
+df['RSI'] = ta_momentum.rsi(close=df['HL2'], length=rsi_periodo, scalar=None, talib=True)
+df['SMA_RSI'] = ta_overlap.sma(close=df['RSI'], length=rsi_periodo, talib=True)
 # # print(df.head())   #check primeros values
-# # print(sma_price.tail())  #check ultimos values
+# # print(df.tail())  #check ultimos values
 
 # Plot de DataFrames
 fig, (ax1, ax2) = plt.subplots(2, 1)
@@ -40,7 +42,6 @@ anchoDibujo = int(df['Close'].size)
 ax2.hlines(y=30,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
 ax2.hlines(y=50,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
 ax2.hlines(y=70,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
-
 
 ax1.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
 ax1.set_ylabel("Precios")
