@@ -17,6 +17,7 @@ _SMA_RAPIDA = 'sma_rapida'
 _SMA_LENTA = 'sma_lenta'
 _RSI = 'rsi'
 _SMA_RSI = 'sma_rsi'
+_BRICK_SIZE = 50
 
 def cargaDatosCSV():  # {
 
@@ -30,7 +31,7 @@ def cargaDatosCSV():  # {
     df_new = pd.read_csv('price.csv')
     df_new.columns = [i.lower() for i in df_new.columns]  #lower case a nombres de columnas
     renko = indicators.Renko(df_new)
-    renko.brick_size = 50
+    renko.brick_size = _BRICK_SIZE
     renko.chart_type = indicators.Renko.PERIOD_CLOSE
     data_RK = renko.get_ohlc_data()
 
@@ -100,6 +101,9 @@ def plot_all():#{
     # Plot grafico
     #mpf.plot(df, type='candle', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d')
     mpf.plot(df, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d')
+
+    #Plot renko
+    mpf.plot(df, type='renko', ax=ax1,xrotation=90, datetime_format='%Y-%m-%d', renko_params=dict(brick_size=_BRICK_SIZE))
 
     mpf.show()
 #}
