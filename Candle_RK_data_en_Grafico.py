@@ -26,6 +26,7 @@ def cargaDatosCSV():  # {
     print('**** df: \n', df)
     return df
 
+
     # df_new = pd.read_csv('price.csv')
     # df_new.columns = [i.lower() for i in df_new.columns]  #lower case a nombres de columnas
     # renko = indicators.Renko(df_new)
