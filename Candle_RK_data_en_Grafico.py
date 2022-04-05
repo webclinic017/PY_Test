@@ -100,7 +100,7 @@ def plot_all():#{
 
     # Plot grafico
     #mpf.plot(df, type='candle', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d')
-    mpf.plot(df, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d')
+    mpf.plot(df, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d', linecolor='white')
 
     #Plot renko
     mpf.plot(df, type='renko', ax=ax1,xrotation=90, datetime_format='%Y-%m-%d', renko_params=dict(brick_size=_BRICK_SIZE))
