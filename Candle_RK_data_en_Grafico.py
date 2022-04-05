@@ -19,28 +19,29 @@ _RSI = 'rsi'
 _SMA_RSI = 'sma_rsi'
 
 def cargaDatosCSV():  # {
-    df = pd.read_csv('price.csv')
-    df.columns = [i.lower() for i in df.columns] #lower case a nombres de columnas
-    df[_HL2] = (df[_HIGH] + df[_LOW])/2
-    df.index = pd.DatetimeIndex(df[_DATE])
-    print('**** df: \n', df)
-    return df
 
+    # df = pd.read_csv('price.csv')
+    # df.columns = [i.lower() for i in df.columns] #lower case a nombres de columnas
+    # df[_HL2] = (df[_HIGH] + df[_LOW])/2
+    # df.index = pd.DatetimeIndex(df[_DATE])
+    # print('**** df: \n', df)
+    # return df
 
-    # df_new = pd.read_csv('price.csv')
-    # df_new.columns = [i.lower() for i in df_new.columns]  #lower case a nombres de columnas
-    # renko = indicators.Renko(df_new)
-    # renko.brick_size = 50
-    # renko.chart_type = indicators.Renko.PERIOD_CLOSE
-    # data_RK = renko.get_ohlc_data()
+    df_new = pd.read_csv('price.csv')
+    df_new.columns = [i.lower() for i in df_new.columns]  #lower case a nombres de columnas
+    renko = indicators.Renko(df_new)
+    renko.brick_size = 50
+    renko.chart_type = indicators.Renko.PERIOD_CLOSE
+    data_RK = renko.get_ohlc_data()
 
-    # # usados por las SMA
-    # data_RK[_HL2] = (data_RK[_HIGH] + data_RK[_LOW])/2
-    # data_RK.index = pd.DatetimeIndex(data_RK[_DATE])
-    #
-    # print('**** Renko', data_RK)
-    #
-    # return data_RK
+    # usados por las SMA
+    data_RK[_HL2] = (data_RK[_HIGH] + data_RK[_LOW])/2
+    data_RK.index = pd.DatetimeIndex(data_RK[_DATE])
+
+    data_RK['volume'] = 1
+    print('**** Renko', data_RK)
+
+    return data_RK
 # }
 
 def calculoSMA():#{
@@ -97,7 +98,9 @@ def plot_all():#{
     ax1.grid(),ax2.grid()
 
     # Plot grafico
-    mpf.plot(df, type='candle', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d')
+    #mpf.plot(df, type='candle', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d')
+    mpf.plot(df, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d')
+
     mpf.show()
 #}
 
