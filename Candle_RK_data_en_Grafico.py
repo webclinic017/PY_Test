@@ -99,7 +99,6 @@ def plot_all():#{
     ax1.grid(),ax2.grid()
 
     # Plot grafico
-    #mpf.plot(df, type='candle', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d')
     mpf.plot(df, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d', linecolor='white')
 
     #Plot renko
