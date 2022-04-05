@@ -20,7 +20,7 @@ _SMA_RSI = 'sma_rsi'
 
 def cargaDatosCSV():  # {
     df = pd.read_csv('price.csv')
-    df.columns = [i.lower() for i in df.columns]
+    df.columns = [i.lower() for i in df.columns] #lower case a nombres de columnas
     df[_HL2] = (df[_HIGH] + df[_LOW])/2
     df.index = pd.DatetimeIndex(df[_DATE])
     print('**** df: \n', df)
