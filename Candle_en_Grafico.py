@@ -14,7 +14,6 @@ def cargaDatosCSV():#{
 #}
 
 def calculoSMA():#{
-    size_sma_min=int(3)
     sma_rapida=int(3)
     df['SMA_Rapida'] = ta_overlap.sma(close=df['HL2'], length=sma_rapida, talib=True)
 
