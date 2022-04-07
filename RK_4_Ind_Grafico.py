@@ -45,36 +45,48 @@ def cargaDatosCSV():  # {
     return data_RK
 # }
 
-def calculoSMA():#{
+def calculoSMA(data_RK):#{
     sma_rapida=int(3)
-    df[_SMA_RAPIDA] = ta_overlap.sma(close=df[_HL2], length=sma_rapida, talib=True)
+    data_RK[_SMA_RAPIDA] = ta_overlap.sma(close=data_RK[_HL2], length=sma_rapida, talib=True)
 
     sma_lenta=int(6)
-    df[_SMA_LENTA] = ta_overlap.sma(close=df[_HL2], length=sma_lenta, talib=True)
-    return df
+    data_RK[_SMA_LENTA] = ta_overlap.sma(close=data_RK[_HL2], length=sma_lenta, talib=True)
 #}
 
-def calculosRSI():#{
+def calculosRSI(data_RK):#{
     rsi_periodo=int(16)
-    df[_RSI] = ta_momentum.rsi(close=df[_HL2], length=rsi_periodo, scalar=None, talib=True)
-    df[_SMA_RSI] = ta_overlap.sma(close=df[_RSI], length=rsi_periodo, talib=True)
-    # print(df.head())   #check primeros values
-    # print(df.tail())  #check ultimos values
-    return df
+    data_RK[_RSI] = ta_momentum.rsi(close=data_RK[_HL2], length=rsi_periodo, scalar=None, talib=True)
+    data_RK[_SMA_RSI] = ta_overlap.sma(close=data_RK[_RSI], length=rsi_periodo, talib=True)
+    # print(data_RK.head())   #check primeros values
+    # print(data_RK.tail())  #check ultimos values
 #}
 
-def plot_all():#{
+def calcula_STOCH(df_RK):#{
+    #k:100 d:10 smooth:2
+    fast_k = int(10) #Ideal:  100-10-2
+    slow_d = int(3)  #tocada: 10-3-2
+    smooth = int(2)
+
+    high_column = df_RK.get(_HIGH)
+    low_column = df_RK.get(_LOW)
+    hl2_column = df_RK.get(_HL2)
+
+    df_RK = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k, d=slow_d, smooth_k=smooth)
+    # print("*** STOCH_K: \n ", df_RK)
+#}
+
+def plot_all(data_RK):#{
     # Plot de DataFrames
     fig = mpf.figure()
     ax1 = fig.add_subplot(2,1,1, style='binance')
     ax2 = fig.add_subplot(2,1,2, sharex=ax1, style='binance')
-    ap = [ mpf.make_addplot(df[[_RSI,_SMA_RSI]],type='line', ax=ax2, ylabel=''),
-           mpf.make_addplot(df[[_SMA_RAPIDA,_SMA_LENTA]], type='line', ax=ax1, ylabel='')
+    ap = [ mpf.make_addplot(data_RK[[_RSI,_SMA_RSI]],type='line', ax=ax2, ylabel=''),
+           mpf.make_addplot(data_RK[[_SMA_RAPIDA,_SMA_LENTA]], type='line', ax=ax1, ylabel='')
          ]
 
     #Segundo grafico
     #Hlines grafico
-    anchoDibujo = int(df[_CLOSE].size)
+    anchoDibujo = int(data_RK[_CLOSE].size)
     ax2.hlines(y=30,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
     ax2.hlines(y=50,  xmin=0, xmax=anchoDibujo, colors='grey', linestyle='dotted', linewidth=2)
     ax2.hlines(y=70,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
@@ -99,15 +111,16 @@ def plot_all():#{
     ax1.grid(),ax2.grid()
 
     #Plot grafico
-    mpf.plot(df, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d', linecolor='white')
+    mpf.plot(data_RK, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d', linecolor='white')
 
     #Plot renko
-    mpf.plot(df, type='renko', ax=ax1,xrotation=90, datetime_format='%Y-%m-%d', renko_params=dict(brick_size=_BRICK_SIZE))
+    mpf.plot(data_RK, type='renko', ax=ax1,xrotation=90, datetime_format='%Y-%m-%d', renko_params=dict(brick_size=_BRICK_SIZE))
 
     mpf.show()
 #}
 
-df = cargaDatosCSV()
-df = calculoSMA()
-df = calculosRSI()
-plot_all()
+data_RK = cargaDatosCSV()
+calculoSMA(data_RK)
+calculosRSI(data_RK)
+calcula_STOCH(data_RK)
+plot_all(data_RK)
