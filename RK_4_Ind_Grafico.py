@@ -75,6 +75,18 @@ def calcula_STOCH(df_RK):#{
     # print("*** STOCH_K: \n ", df_RK)
 #}
 
+def calcula_ADX(df_RK):#{
+    high_column = df_RK.get(_HIGH)
+    low_column = df_RK.get(_LOW)
+    hl2_column = df_RK.get(_HL2)
+    length_DI = int(16)
+    lensig_ADX = int(16)
+    df_RK = ta_trend.adx(high=high_column, low=low_column, close=hl2_column, length=length_DI, lensig=lensig_ADX)
+
+    df_RK.columns = [i[0:3].lower() for i in df_RK.columns]  #adx dmp dmn
+    print("*** ADX: \n ", df_RK)
+#}
+
 def plot_all(data_RK):#{
     # Plot de DataFrames
     fig = mpf.figure()
@@ -123,4 +135,5 @@ data_RK = cargaDatosCSV()
 calculoSMA(data_RK)
 calculosRSI(data_RK)
 calcula_STOCH(data_RK)
+calcula_ADX(data_RK)
 plot_all(data_RK)
