@@ -21,7 +21,7 @@ _SMA_RAPIDA = 'sma_rapida'
 _SMA_LENTA = 'sma_lenta'
 _RSI = 'rsi'
 _SMA_RSI = 'sma_rsi'
-_ADX = 'adx'
+
 
 def cargaDatosCSV():  # {
 
@@ -72,7 +72,7 @@ def calcula_STOCH(df_RK):#{
     hl2_column = df_RK.get(_HL2)
 
     df_RK = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k, d=slow_d, smooth_k=smooth)
-    print("*** STOCH_K: \n ", df_RK)
+    # print("*** STOCH_K: \n ", df_RK)
 #}
 
 def calcula_ADX(df_RK):#{
@@ -81,10 +81,10 @@ def calcula_ADX(df_RK):#{
     hl2_column = df_RK.get(_HL2)
     length_DI = int(16)
     lensig_ADX = int(16)
-    df_res = ta_trend.adx(high=high_column, low=low_column, close=hl2_column, length=length_DI, lensig=lensig_ADX)
+    df_RK = ta_trend.adx(high=high_column, low=low_column, close=hl2_column, length=length_DI, lensig=lensig_ADX)
 
-    # print("*** ADX: \n ", df_res)
-
+    df_RK.columns = [i[0:3].lower() for i in df_RK.columns]  #adx dmp dmn
+    print("*** ADX: \n ", df_RK)
 #}
 
 # main
