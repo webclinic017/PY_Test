@@ -40,7 +40,7 @@ def calcula_STOCH():#{
 
     # df['STOCH_K'], df['STOCH_D'] = df.ta.stoch(fast_k, slow_d, high='High', low='Low', close='HL_div_2', append=True) # "key close" "value:open"
     # print("*** STOCH_K: \n ", df['STOCH_K'])
-    df.ta.stoch
+
     #high, low, close, k=None, d=None, smooth_k=None
     df_res = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k, d=slow_d, smooth_k=smooth)
     print("*** STOCH_K: \n ", df_res)
