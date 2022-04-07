@@ -72,14 +72,14 @@ def plot_all():#{
            mpf.make_addplot(df[[_SMA_RAPIDA,_SMA_LENTA]], type='line', ax=ax1, ylabel='')
          ]
 
-    # Segundo grafico
+    #Segundo grafico
     #Hlines grafico
     anchoDibujo = int(df[_CLOSE].size)
     ax2.hlines(y=30,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
     ax2.hlines(y=50,  xmin=0, xmax=anchoDibujo, colors='grey', linestyle='dotted', linewidth=2)
     ax2.hlines(y=70,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
 
-    # Titulos
+    #Titulos
     ax1.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
     ax2.set_title(_RSI, loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
 
@@ -87,7 +87,7 @@ def plot_all():#{
     ax1.legend(loc='best')
     ax2.legend(loc='best')
 
-    #size dibujo
+    #Size dibujo
     fig.set_figheight(10)
     fig.set_figwidth(anchoDibujo)
 
@@ -98,7 +98,7 @@ def plot_all():#{
     #Grilla
     ax1.grid(),ax2.grid()
 
-    # Plot grafico
+    #Plot grafico
     mpf.plot(df, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d', linecolor='white')
 
     #Plot renko
