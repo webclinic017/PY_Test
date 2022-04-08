@@ -44,7 +44,7 @@ def cargaDatosCSV():  # {
     data_RK.index = pd.DatetimeIndex(data_RK[_DATE])
 
     data_RK['volume'] = 1
-    print('**** Renko', data_RK)
+    # print('**** Renko', data_RK)
 
     return data_RK
 # }
@@ -116,15 +116,18 @@ def calcula_ADX(df_RK):#{
 def plot_all(data_RK):#{
     # Plot de DataFrames
     fig = mpf.figure()
-    ax1 = fig.add_subplot(3,1,1, style='binance')
-    ax2 = fig.add_subplot(3,1,2, sharex=ax1, style='binance')
-    ax3 = fig.add_subplot(3,1,3, sharex=ax1, style='binance')
-    # ax4 = fig.add_subplot(2,1,4, sharex=ax1, style='binance')
+    ax1 = fig.add_subplot(4,1,1, style='binance')  # count=4, file=1, row=1...4
+    ax2 = fig.add_subplot(4,1,2, sharex=ax1, style='binance')
+    ax3 = fig.add_subplot(4,1,3, sharex=ax1, style='binance')
+    ax4 = fig.add_subplot(4,1,4, sharex=ax1, style='binance')
     ap = [ mpf.make_addplot(data_RK[[_RSI,_SMA_RSI]],type='line', ax=ax2, ylabel=''),
-           #mpf.make_addplot(data_RK[[_STOCH_K, _STOCH_D]], type='line', ax=ax3, ylabel=''),
-           # mpf.make_addplot(data_RK[[_ADX, _DMP, _DMN]], type='line', ax=ax4, ylabel=''),
+           mpf.make_addplot(data_RK[[_RSI,_SMA_RSI]], type='line', ax=ax3, ylabel=''),
+           mpf.make_addplot(data_RK[[_RSI,_SMA_RSI]], type='line', ax=ax4, ylabel=''),
            mpf.make_addplot(data_RK[[_SMA_RAPIDA,_SMA_LENTA]], type='line', ax=ax1, ylabel='')
          ]
+
+    # mpf.make_addplot(data_RK[[_STOCH_K, _STOCH_D]], type='line', ax=ax3, ylabel=''),
+    # mpf.make_addplot(data_RK[[_ADX, _DMP, _DMN]], type='line', ax=ax4, ylabel=''),
 
     #Segundo grafico
     #Hlines grafico
@@ -164,6 +167,6 @@ def plot_all(data_RK):#{
 data_RK = cargaDatosCSV()
 calculoSMA(data_RK)
 calculosRSI(data_RK)
-calcula_STOCH(data_RK)
-calcula_ADX(data_RK)
+# calcula_STOCH(data_RK)
+# calcula_ADX(data_RK)
 plot_all(data_RK)
