@@ -47,6 +47,11 @@ def cargaDatosCSV():  # {
     data_RK['volume'] = 1
     # print('**** Renko', data_RK)
 
+    if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
+        print("*** cargaDatosCSV - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
+        print("*** cargaDatosCSV - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+    # }
     return data_RK
 # }
 
@@ -61,12 +66,24 @@ def calcula_SMA(data_RK):#{
     #     print("*** LlenarEspacios SMA: " + str(llenarEspacios) + " - data_RK.size:" + str(rk_size) + " - df_new_size.size:" + str(df_new_size))
     # # }
 
+    if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
+        print("*** calcula_SMA - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
+        print("*** calcula_SMA - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+    # }
     # print("*** SMA: \n ", data_RK)
 #}
 
 def calcula_RSI(data_RK):#{
     rsi_periodo = int(16)
     data_RK = ta_momentum.rsi(close=data_RK[_HL2], length=rsi_periodo, scalar=None, talib=True)
+
+    if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
+        print("*** calcula_RSI - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
+        print("*** calcula_RSI - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+    # }
+
     # print("*** RSI: \n ", data_RK)
 #}
 
@@ -83,13 +100,13 @@ def calcula_STOCH(data_RK):#{
     df_stoch = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k,d=slow_d, smooth_k=smooth)
     df_stoch.columns = [i[0:6].lower() for i in df_stoch.columns]  # stochk  stochd
 
-    if(len(df_stoch[df_stoch.index.duplicated()]) > 0):#{
-        print("Antes - Row duplicados: ", df_stoch[df_stoch.index.duplicated()].head())
+    if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
+        print("*** calcula_STOCH - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
         df_stoch = df_stoch.loc[~df_stoch.index.duplicated(), :]
-        # print("Despues - Row duplicados: ", df_stoch[df_stoch.index.duplicated()].head())
+        print("*** calcula_STOCH - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
     # }
 
-    print("*** df_stoch: \n ", df_stoch.head())
+    # print("*** df_stoch: \n ", df_stoch.head())
 
     data_RK[_STOCH_K] = df_stoch[_STOCH_K]
     data_RK[_STOCH_D] = df_stoch[_STOCH_D]
@@ -121,6 +138,6 @@ data_RK = cargaDatosCSV();
 rk_size = data_RK.size
 
 calcula_SMA(data_RK)
-# calcula_RSI(data_RK)
+calcula_RSI(data_RK)
 calcula_STOCH(data_RK)
 # calcula_ADX(data_RK)
