@@ -50,7 +50,7 @@ def cargaDatosCSV():  # {
         data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
         print("*** cargaDatosCSV - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
     # }
-    print("*** cargaDatosCSV - data_RK: \n ", data_RK)
+    # print("*** cargaDatosCSV - data_RK: \n ", data_RK)
 
     return data_RK
 # }
@@ -161,7 +161,8 @@ def plot_all(data_RK):#{
            mpf.make_addplot(data_RK[[_SMA_RAPIDA,_SMA_LENTA]], type='line', ax=ax1, ylabel='')
          ]
 
-    #_ADX _DMP _DMN
+    #FFB72B orange  #5277FF green
+
 
     #Segundo grafico
     #Hlines grafico
@@ -183,7 +184,7 @@ def plot_all(data_RK):#{
     ax4.legend(loc='best')
 
     #Size dibujo
-    fig.set_figheight(10)
+    fig.set_figheight(20)
     fig.set_figwidth(anchoDibujo)
 
     #Ocultar "escala x" en ax1
