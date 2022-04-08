@@ -155,10 +155,23 @@ def plot_all(data_RK):#{
     ax2 = fig.add_subplot(4,1,2, sharex=ax1, style='binance')
     ax3 = fig.add_subplot(4,1,3, sharex=ax1, style='binance')
     ax4 = fig.add_subplot(4,1,4, sharex=ax1, style='binance')
-    ap = [ mpf.make_addplot(data_RK[[_RSI,_SMA_RSI]],type='line', ax=ax2, ylabel=''),
-           mpf.make_addplot(data_RK[[_STOCH_K,_STOCH_D]], type='line', ax=ax3, ylabel=''),
-           mpf.make_addplot(data_RK[[_ADX,_DMP,_DMN]], type='line', ax=ax4, ylabel=''),
-           mpf.make_addplot(data_RK[[_SMA_RAPIDA,_SMA_LENTA]], type='line', ax=ax1, ylabel='')
+    ap = [
+           # Plot ax1
+           mpf.make_addplot(data_RK[_SMA_RAPIDA], type='line', ax=ax1, ylabel='', width=1, color='#FF8532'),
+           mpf.make_addplot(data_RK[_SMA_LENTA], type='line', ax=ax1, ylabel='', width=1, color='#1589FF'),
+
+           # Plot ax2
+           mpf.make_addplot(data_RK[_RSI],type='line', ax=ax2, ylabel='', width=2, color='green'),
+           mpf.make_addplot(data_RK[_SMA_RSI], type='line', ax=ax2, ylabel='', width=2, color='red'),
+
+           # Plot ax3
+           mpf.make_addplot(data_RK[_STOCH_K], type='line', ax=ax3, ylabel='', width=2, color='green'),
+           mpf.make_addplot(data_RK[_STOCH_D], type='line', ax=ax3, ylabel='', width=2, color='red'),
+
+           # Plot ax4
+           mpf.make_addplot(data_RK[_ADX], type='line', ax=ax4, ylabel='', width=2, color='#1589FF'),
+           mpf.make_addplot(data_RK[_DMP], type='line', ax=ax4, ylabel='', width=2, color='green'),
+           mpf.make_addplot(data_RK[_DMN], type='line', ax=ax4, ylabel='', width=2, color='red')
          ]
 
     #FFB72B orange  #5277FF green
