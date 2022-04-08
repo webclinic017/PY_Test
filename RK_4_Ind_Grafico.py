@@ -75,14 +75,13 @@ def calculosRSI(data_RK):#{
         data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
         print("*** calcula_RSI - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
     # }
-
     # print("*** RSI: \n ", data_RK)
 #}
 
 def calcula_STOCH(data_RK):#{
     #k:100 d:10 smooth:2
-    fast_k = int(10) #Ideal:  100-10-2
-    slow_d = int(3)  #tocada: 10-3-2
+    fast_k = int(10) # JFM Ideal:  100-10-2
+    slow_d = int(3)  # JFM tocada: 10-3-2
     smooth = int(2)
 
     high_column = data_RK.get(_HIGH)
@@ -97,8 +96,6 @@ def calcula_STOCH(data_RK):#{
         df_stoch = df_stoch.loc[~df_stoch.index.duplicated(), :]
         print("*** calcula_STOCH - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
     # }
-
-    # print("*** df_stoch: \n ", df_stoch.head())
 
     data_RK[_STOCH_K] = df_stoch[_STOCH_K]
     data_RK[_STOCH_D] = df_stoch[_STOCH_D]
@@ -144,7 +141,6 @@ def plot_all(data_RK):#{
            mpf.make_addplot(data_RK[[_SMA_RAPIDA,_SMA_LENTA]], type='line', ax=ax1, ylabel='')
          ]
 
-    # mpf.make_addplot(data_RK[[_STOCH_K, _STOCH_D]], type='line', ax=ax3, ylabel=''),
     # mpf.make_addplot(data_RK[[_ADX, _DMP, _DMN]], type='line', ax=ax4, ylabel=''),
 
     #Segundo grafico
@@ -156,11 +152,15 @@ def plot_all(data_RK):#{
 
     #Titulos
     ax1.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
-    ax2.set_title(_RSI, loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
+    ax2.set_title('RSI', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
+    ax3.set_title('STOCH', loc="left", fontdict={'fontsize': 8, 'fontweight': 'bold', 'color': 'tab:blue'})
+    ax4.set_title('ADX', loc="left", fontdict={'fontsize': 8, 'fontweight': 'bold', 'color': 'tab:blue'})
 
     #Referencias de lineas
     ax1.legend(loc='best')
     ax2.legend(loc='best')
+    ax3.legend(loc='best')
+    ax4.legend(loc='best')
 
     #Size dibujo
     fig.set_figheight(10)
@@ -168,10 +168,13 @@ def plot_all(data_RK):#{
 
     #Ocultar "escala x" en ax1
     ax1.xaxis.set_visible(False)
-    ax1.yaxis.set_visible(True)
+    ax2.xaxis.set_visible(False)
+    ax3.xaxis.set_visible(False)
+    ax4.xaxis.set_visible(True)
+    # ax1.yaxis.set_visible(True)
 
     #Grilla
-    ax1.grid(),ax2.grid()
+    ax1.grid(),ax2.grid(),ax3.grid(),ax4.grid()
 
     #Plot grafico
     mpf.plot(data_RK, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d', linecolor='white')
