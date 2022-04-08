@@ -44,7 +44,13 @@ def cargaDatosCSV():  # {
     data_RK.index = pd.DatetimeIndex(data_RK[_DATE])
 
     data_RK['volume'] = 1
-    # print('**** Renko', data_RK)
+
+    if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
+        print("*** calcula_SMA - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
+        print("*** calcula_SMA - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+    # }
+    # print("*** SMA: \n ", data_RK)
 
     return data_RK
 # }
@@ -63,34 +69,47 @@ def calculosRSI(data_RK):#{
     data_RK[_SMA_RSI] = ta_overlap.sma(close=data_RK[_RSI], length=rsi_periodo, talib=True)
     # print(data_RK.head())   #check primeros values
     # print(data_RK.tail())  #check ultimos values
+
+    if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
+        print("*** calcula_RSI - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
+        print("*** calcula_RSI - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+    # }
+
+    # print("*** RSI: \n ", data_RK)
 #}
 
-def calcula_STOCH(df_RK):#{
+def calcula_STOCH(data_RK):#{
     #k:100 d:10 smooth:2
     fast_k = int(10) #Ideal:  100-10-2
     slow_d = int(3)  #tocada: 10-3-2
     smooth = int(2)
 
-    high_column = df_RK.get(_HIGH)
-    low_column = df_RK.get(_LOW)
-    hl2_column = df_RK.get(_HL2)
-    df_new_STOCH = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k, d=slow_d, smooth_k=smooth)
-    df_new_STOCH.columns = [i[0:6].lower() for i in df_new_STOCH.columns]  # stochk  stochd
+    high_column = data_RK.get(_HIGH)
+    low_column = data_RK.get(_LOW)
+    hl2_column = data_RK.get(_HL2)
 
-    rk_size = df_RK.size
-    new_STOCH_size = df_new_STOCH.size
-    llenarEspacios = 0
-    if rk_size > new_STOCH_size: #{
-        llenarEspacios = rk_size - new_STOCH_size
-        print("*** LlenarEspacios STOCH: " + str(llenarEspacios) + " - df_RK.size:" + str(rk_size) + " - df_new_STOCH.size:" + str(new_STOCH_size))
+    df_stoch = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k,d=slow_d, smooth_k=smooth)
+    df_stoch.columns = [i[0:6].lower() for i in df_stoch.columns]  # stochk  stochd
+
+    if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
+        print("*** calcula_STOCH - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        df_stoch = df_stoch.loc[~df_stoch.index.duplicated(), :]
+        print("*** calcula_STOCH - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
     # }
-    #
-    # for x in Range(0,llenarEspacios):
-    #     df_new_STOCH[_STOCH_K].insert(0,1)
 
-    # df_RK.insert(len(df_RK.columns), _STOCH_K, df_new_STOCH[_STOCH_K].values)
-    # df_RK.insert(len(df_RK.columns), _STOCH_D, df_new_STOCH[_STOCH_D].values)
-    # print("*** STOCH_K: \n ", df_RK.head())
+    # print("*** df_stoch: \n ", df_stoch.head())
+
+    data_RK[_STOCH_K] = df_stoch[_STOCH_K]
+    data_RK[_STOCH_D] = df_stoch[_STOCH_D]
+
+    df_new_size = data_RK.size
+    llenarEspacios = 0
+    if rk_size > df_new_size: #{
+        llenarEspacios = rk_size - df_new_size
+        print("*** LlenarEspacios STOCH: " + str(llenarEspacios) + " - data_RK.size:" + str(rk_size) + " - df_new_size.size:" + str(df_new_size))
+    # }
+    print("*** STOCH_K: \n ", data_RK.head())
 #}
 
 def calcula_ADX(df_RK):#{
@@ -103,7 +122,6 @@ def calcula_ADX(df_RK):#{
     df_new_adx.columns = [i[0:3].lower() for i in df_new_adx.columns]  #adx dmp dmn
     # print("*** ADX: \n ", df_new_adx.head())
 
-    rk_size = df_RK.size
     df_new_adx_size = df_new_adx.size
     llenarEspacios = 0
     if rk_size > df_new_adx_size:  # {
@@ -165,8 +183,10 @@ def plot_all(data_RK):#{
 #}
 
 data_RK = cargaDatosCSV()
+rk_size = data_RK.size
+
 calculoSMA(data_RK)
 calculosRSI(data_RK)
-# calcula_STOCH(data_RK)
+calcula_STOCH(data_RK)
 # calcula_ADX(data_RK)
-plot_all(data_RK)
+# plot_all(data_RK)
