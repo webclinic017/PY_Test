@@ -18,11 +18,11 @@ _SMA_RAPIDA = 'sma_rapida'
 _SMA_LENTA = 'sma_lenta'
 _RSI = 'rsi'
 _SMA_RSI = 'sma_rsi'
+_STOCH_K = 'stochk'
+_STOCH_D = 'stochd'
 _ADX = 'adx'
 _DMP = 'dmp'
 _DMN = 'dmn'
-_STOCH_K = 'stochk'
-_STOCH_D = 'stochd'
 
 def cargaDatosCSV():  # {
     # df = pd.read_csv('price.csv')
@@ -99,10 +99,11 @@ def calcula_STOCH(data_RK):#{
     df_stoch = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k,d=slow_d, smooth_k=smooth)
     df_stoch.columns = [i[0:6].lower() for i in df_stoch.columns]  # stochk  stochd
 
-    if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
-        print("*** calcula_STOCH - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+    # Tratamiento de duplicados
+    if (len(df_stoch[df_stoch.index.duplicated()]) > 0):  # {
+        print("*** calcula_STOCH - Antes - Row duplicados: ", df_stoch[df_stoch.index.duplicated()].head())
         df_stoch = df_stoch.loc[~df_stoch.index.duplicated(), :]
-        print("*** calcula_STOCH - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        print("*** calcula_STOCH - Despues - Row duplicados: ", df_stoch[df_stoch.index.duplicated()].head())
     # }
 
     data_RK[_STOCH_K] = df_stoch[_STOCH_K]
@@ -114,7 +115,7 @@ def calcula_STOCH(data_RK):#{
         llenarEspacios = rk_size - df_new_size
         print("*** LlenarEspacios STOCH: " + str(llenarEspacios) + " - data_RK.size:" + str(rk_size) + " - df_new_size.size:" + str(df_new_size))
     # }
-    print("*** calcula_STOCH - data_RK: \n ", data_RK)
+    # print("*** calcula_STOCH - data_RK: \n ", data_RK)
 #}
 
 def calcula_ADX(df_RK):#{
@@ -123,17 +124,28 @@ def calcula_ADX(df_RK):#{
     hl2_column = df_RK.get(_HL2)
     length_DI = int(16)
     lensig_ADX = int(16)
-    df_new_adx = ta_trend.adx(high=high_column, low=low_column, close=hl2_column, length=length_DI, lensig=lensig_ADX)
-    df_new_adx.columns = [i[0:3].lower() for i in df_new_adx.columns]  #adx dmp dmn
-    # print("*** ADX: \n ", df_new_adx.head())
+    df_adx = ta_trend.adx(high=high_column, low=low_column, close=hl2_column, length=length_DI, lensig=lensig_ADX)
+    df_adx.columns = [i[0:3].lower() for i in df_adx.columns]  #adx dmp dmn
 
-    df_new_adx_size = df_new_adx.size
-    llenarEspacios = 0
-    if rk_size > df_new_adx_size:  # {
-        llenarEspacios = rk_size - df_new_adx_size
-        print("*** LlenarEspacios ADX: " + str(llenarEspacios) + " - df_RK.size:" + str(
-            rk_size) + " - df_new_adx_size.size:" + str(df_new_adx_size))
+    #Tratamiento de duplicados
+    if (len(df_adx[df_adx.index.duplicated()]) > 0):  # {
+        print("*** calcula_ADX - Antes - Row duplicados: ", df_adx[df_adx.index.duplicated()].head())
+        df_stoch = df_stoch.loc[~df_stoch.index.duplicated(), :]
+        print("*** calcula_ADX - Despues - Row duplicados: ", df_adx[df_adx.index.duplicated()].head())
     # }
+
+    data_RK[_ADX] = df_adx[_ADX]
+    data_RK[_DMP] = df_adx[_DMP]
+    data_RK[_DMN] = df_adx[_DMN]
+
+    df_new_size = data_RK.size
+    llenarEspacios = 0
+    if rk_size > df_new_size:  # {
+        llenarEspacios = rk_size - df_new_size
+        print("*** LlenarEspacios ADX: " + str(llenarEspacios) + " - data_RK.size:" + str(
+            rk_size) + " - df_new_size.size:" + str(df_new_size))
+    # }
+    # print("*** calcula_STOCH - data_RK: \n ", data_RK)
 #}
 
 def plot_all(data_RK):#{
@@ -145,11 +157,11 @@ def plot_all(data_RK):#{
     ax4 = fig.add_subplot(4,1,4, sharex=ax1, style='binance')
     ap = [ mpf.make_addplot(data_RK[[_RSI,_SMA_RSI]],type='line', ax=ax2, ylabel=''),
            mpf.make_addplot(data_RK[[_STOCH_K,_STOCH_D]], type='line', ax=ax3, ylabel=''),
-           mpf.make_addplot(data_RK[[_RSI,_SMA_RSI]], type='line', ax=ax4, ylabel=''),
+           mpf.make_addplot(data_RK[[_ADX,_DMP,_DMN]], type='line', ax=ax4, ylabel=''),
            mpf.make_addplot(data_RK[[_SMA_RAPIDA,_SMA_LENTA]], type='line', ax=ax1, ylabel='')
          ]
 
-    # mpf.make_addplot(data_RK[[_ADX, _DMP, _DMN]], type='line', ax=ax4, ylabel=''),
+    #_ADX _DMP _DMN
 
     #Segundo grafico
     #Hlines grafico
@@ -201,5 +213,5 @@ rk_size = data_RK.size
 calculoSMA(data_RK)
 calculosRSI(data_RK)
 calcula_STOCH(data_RK)
-# calcula_ADX(data_RK)
+calcula_ADX(data_RK)
 plot_all(data_RK)
