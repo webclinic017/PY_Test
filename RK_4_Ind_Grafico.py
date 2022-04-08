@@ -46,11 +46,11 @@ def cargaDatosCSV():  # {
     data_RK['volume'] = 1
 
     if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
-        print("*** calcula_SMA - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        print("*** cargaDatosCSV - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
         data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
-        print("*** calcula_SMA - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        print("*** cargaDatosCSV - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
     # }
-    # print("*** SMA: \n ", data_RK)
+    print("*** cargaDatosCSV - data_RK: \n ", data_RK)
 
     return data_RK
 # }
@@ -61,6 +61,14 @@ def calculoSMA(data_RK):#{
 
     sma_lenta=int(6)
     data_RK[_SMA_LENTA] = ta_overlap.sma(close=data_RK[_HL2], length=sma_lenta, talib=True)
+
+    if (len(data_RK[data_RK.index.duplicated()]) > 0):  # {
+        print("*** calculoSMA - Antes - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+        data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
+        print("*** calculoSMA - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
+    # }
+
+    # print("*** calculoSMA - data_RK: \n ", data_RK)
 #}
 
 def calculosRSI(data_RK):#{
@@ -75,7 +83,7 @@ def calculosRSI(data_RK):#{
         data_RK = data_RK.loc[~data_RK.index.duplicated(), :]
         print("*** calcula_RSI - Despues - Row duplicados: ", data_RK[data_RK.index.duplicated()].head())
     # }
-    # print("*** RSI: \n ", data_RK)
+    # print("*** calculosRSI - data_RK: \n ", data_RK)
 #}
 
 def calcula_STOCH(data_RK):#{
@@ -106,7 +114,7 @@ def calcula_STOCH(data_RK):#{
         llenarEspacios = rk_size - df_new_size
         print("*** LlenarEspacios STOCH: " + str(llenarEspacios) + " - data_RK.size:" + str(rk_size) + " - df_new_size.size:" + str(df_new_size))
     # }
-    print("*** STOCH_K: \n ", data_RK.head())
+    print("*** calcula_STOCH - data_RK: \n ", data_RK)
 #}
 
 def calcula_ADX(df_RK):#{
