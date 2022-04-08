@@ -164,12 +164,20 @@ def plot_all(data_RK):#{
     #FFB72B orange  #5277FF green
 
 
-    #Segundo grafico
+    #Segundo grafico (RSI)
     #Hlines grafico
     anchoDibujo = int(data_RK[_CLOSE].size)
-    ax2.hlines(y=30,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
-    ax2.hlines(y=50,  xmin=0, xmax=anchoDibujo, colors='grey', linestyle='dotted', linewidth=2)
-    ax2.hlines(y=70,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=2)
+    ax2.hlines(y=30,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
+    ax2.hlines(y=50,  xmin=0, xmax=anchoDibujo, colors='grey', linestyle='dotted', linewidth=1)
+    ax2.hlines(y=70,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
+
+    # Tercer grafico (STOCH)
+    ax3.hlines(y=20, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
+    ax3.hlines(y=50, xmin=0, xmax=anchoDibujo, colors='grey', linestyle='dotted', linewidth=1)
+    ax3.hlines(y=80, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
+
+    # Cuarto grafico (ADX)
+    ax4.hlines(y=10, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
 
     #Titulos
     ax1.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
