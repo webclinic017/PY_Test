@@ -174,50 +174,13 @@ def plot_all(data_RK):#{
            mpf.make_addplot(data_RK[_DMN], type='line', ax=ax4, ylabel='', width=2, color='red')
          ]
 
-    #FFB72B orange  #5277FF green
-
-
-    #Segundo grafico (RSI)
-    #Hlines grafico
     anchoDibujo = int(data_RK[_CLOSE].size)
-    ax2.hlines(y=30,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
-    ax2.hlines(y=50,  xmin=0, xmax=anchoDibujo, colors='grey', linestyle='dotted', linewidth=1)
-    ax2.hlines(y=70,  xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
-
-    # Tercer grafico (STOCH)
-    ax3.hlines(y=20, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
-    ax3.hlines(y=50, xmin=0, xmax=anchoDibujo, colors='grey', linestyle='dotted', linewidth=1)
-    ax3.hlines(y=80, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
-
-    # Cuarto grafico (ADX)
-    ax4.hlines(y=10, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
-
-    #Titulos
-    ax1.set_title('Precios', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
-    ax2.set_title('RSI', loc="left", fontdict = {'fontsize':8, 'fontweight':'bold', 'color':'tab:blue'})
-    ax3.set_title('STOCH', loc="left", fontdict={'fontsize': 8, 'fontweight': 'bold', 'color': 'tab:blue'})
-    ax4.set_title('ADX', loc="left", fontdict={'fontsize': 8, 'fontweight': 'bold', 'color': 'tab:blue'})
-
-    #Referencias de lineas
-    ax1.legend(loc='best')
-    ax2.legend(loc='best')
-    ax3.legend(loc='best')
-    ax4.legend(loc='best')
+    generaHlines(ax2, ax3, ax4, anchoDibujo)
+    configAxis(ax1, ax2, ax3, ax4)
 
     #Size dibujo
     fig.set_figheight(20)
     fig.set_figwidth(anchoDibujo)
-
-    #Ocultar "escala x" en ax1
-    ax1.xaxis.set_visible(False)
-    ax2.xaxis.set_visible(False)
-    ax3.xaxis.set_visible(False)
-    ax4.xaxis.set_visible(True)
-    # ax1.yaxis.set_visible(True)
-
-    #Grilla
-    ax1.grid(),ax2.grid(),ax3.grid(),ax4.grid()
-
     # print("plot_all \n :", data_RK.tail())
 
     #Plot grafico
@@ -228,6 +191,43 @@ def plot_all(data_RK):#{
 
     mpf.show()
 #}
+
+def generaHlines(ax2, ax3, ax4, anchoDibujo):
+    # Segundo grafico (RSI)
+    ax2.hlines(y=30, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
+    ax2.hlines(y=50, xmin=0, xmax=anchoDibujo, colors='grey', linestyle='dotted', linewidth=1)
+    ax2.hlines(y=70, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
+
+    # Tercer grafico (STOCH)
+    ax3.hlines(y=20, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
+    ax3.hlines(y=50, xmin=0, xmax=anchoDibujo, colors='grey', linestyle='dotted', linewidth=1)
+    ax3.hlines(y=80, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
+
+    # Cuarto grafico (ADX)
+    ax4.hlines(y=10, xmin=0, xmax=anchoDibujo, colors='orange', linestyle='dotted', linewidth=1)
+# }
+
+def configAxis(ax1, ax2, ax3, ax4):
+    # Titulos
+    ax1.set_title('Precios', loc="left", fontdict={'fontsize': 8, 'fontweight': 'bold', 'color': 'tab:blue'})
+    ax2.set_title('RSI', loc="left", fontdict={'fontsize': 8, 'fontweight': 'bold', 'color': 'tab:blue'})
+    ax3.set_title('STOCH', loc="left", fontdict={'fontsize': 8, 'fontweight': 'bold', 'color': 'tab:blue'})
+    ax4.set_title('ADX', loc="left", fontdict={'fontsize': 8, 'fontweight': 'bold', 'color': 'tab:blue'})
+    # Grilla
+    ax1.grid(), ax2.grid(), ax3.grid(), ax4.grid()
+    # Referencias de lineas
+    ax1.legend(loc='best')
+    ax2.legend(loc='best')
+    ax3.legend(loc='best')
+    ax4.legend(loc='best')
+    # Ocultar "escala x" en ax1
+    ax1.xaxis.set_visible(False)
+    ax2.xaxis.set_visible(False)
+    ax3.xaxis.set_visible(False)
+    ax4.xaxis.set_visible(True)
+    # ax1.yaxis.set_visible(True)
+#}
+
 
 data_RK = cargaDatosCSV()
 rk_size = data_RK.size
