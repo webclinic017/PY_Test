@@ -184,11 +184,13 @@ def plot_all(data_RK):#{
     #Grilla
     ax1.grid(),ax2.grid(),ax3.grid(),ax4.grid()
 
+    # print("plot_all \n :", data_RK.tail())
+
     #Plot grafico
     mpf.plot(data_RK, type='line', ax=ax1, addplot=ap, xrotation=90, datetime_format='%Y-%m-%d', linecolor='black')
 
     #Plot renko
-    mpf.plot(data_RK, type='renko', ax=ax1,xrotation=90, datetime_format='%Y-%m-%d', renko_params=dict(brick_size=_BRICK_SIZE))
+    # mpf.plot(data_RK, type='renko', ax=ax1, xrotation=90, datetime_format='%Y-%m-%d', renko_params=dict(brick_size=_BRICK_SIZE))
 
     mpf.show()
 #}
