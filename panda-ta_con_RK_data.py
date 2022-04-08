@@ -70,9 +70,23 @@ def calcula_STOCH(df_RK):#{
     high_column = df_RK.get(_HIGH)
     low_column = df_RK.get(_LOW)
     hl2_column = df_RK.get(_HL2)
+    df_new_STOCH = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k, d=slow_d, smooth_k=smooth)
+    df_new_STOCH.columns = [i[0:6].lower() for i in df_new_STOCH.columns]  # stochk  stochd
 
-    df_RK = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k, d=slow_d, smooth_k=smooth)
-    # print("*** STOCH_K: \n ", df_RK)
+    rk_size = df_RK.size
+    new_STOCH_size = df_new_STOCH.size
+    llenarEspacios = 0
+    if rk_size > new_STOCH_size: #{
+        llenarEspacios = rk_size - new_STOCH_size
+        print("*** LlenarEspacios STOCH: " + str(llenarEspacios) + " - df_RK.size:" + str(rk_size) + " - df_new_STOCH.size:" + str(new_STOCH_size))
+    # }
+    #
+    # for x in Range(0,llenarEspacios):
+    #     df_new_STOCH[_STOCH_K].insert(0,1)
+
+    # df_RK.insert(len(df_RK.columns), _STOCH_K, df_new_STOCH[_STOCH_K].values)
+    # df_RK.insert(len(df_RK.columns), _STOCH_D, df_new_STOCH[_STOCH_D].values)
+    # print("*** STOCH_K: \n ", df_RK.head())
 #}
 
 def calcula_ADX(df_RK):#{
@@ -90,7 +104,7 @@ def calcula_ADX(df_RK):#{
 # main
 
 df_RK = cargaDatosCSV();
-calcula_SMA(df_RK)
-calcula_RSI(df_RK)
+# calcula_SMA(df_RK)
+# calcula_RSI(df_RK)
 calcula_STOCH(df_RK)
-calcula_ADX(df_RK)
+# calcula_ADX(df_RK)
