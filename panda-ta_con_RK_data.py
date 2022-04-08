@@ -21,7 +21,8 @@ _SMA_RAPIDA = 'sma_rapida'
 _SMA_LENTA = 'sma_lenta'
 _RSI = 'rsi'
 _SMA_RSI = 'sma_rsi'
-
+_STOCH_K = 'stochk'
+_STOCH_D = 'stochd'
 
 def cargaDatosCSV():  # {
 
@@ -49,62 +50,77 @@ def cargaDatosCSV():  # {
     return data_RK
 # }
 
-def calcula_SMA(df_RK):#{
+def calcula_SMA(data_RK):#{
     sma_periodo = int(3)
-    df_RK = ta_overlap.sma(close=df_RK[_HL2], length=sma_periodo, talib=True)
-    # print("*** SMA: \n ", df_RK)
+    data_RK[_SMA_RAPIDA] = ta_overlap.sma(close=data_RK[_HL2], length=sma_periodo, talib=True)
+
+    # df_new_size = data_RK.size
+    # llenarEspacios = 0
+    # if rk_size > df_new_size :  # {
+    #     llenarEspacios = rk_size - df_new_size
+    #     print("*** LlenarEspacios SMA: " + str(llenarEspacios) + " - data_RK.size:" + str(rk_size) + " - df_new_size.size:" + str(df_new_size))
+    # # }
+
+    # print("*** SMA: \n ", data_RK)
 #}
 
-def calcula_RSI(df_RK):#{
+def calcula_RSI(data_RK):#{
     rsi_periodo = int(16)
-    df_RK = ta_momentum.rsi(close=df_RK[_HL2], length=rsi_periodo, scalar=None, talib=True)
-    # print("*** RSI: \n ", df_RK)
+    data_RK = ta_momentum.rsi(close=data_RK[_HL2], length=rsi_periodo, scalar=None, talib=True)
+    # print("*** RSI: \n ", data_RK)
 #}
 
-def calcula_STOCH(df_RK):#{
+def calcula_STOCH(data_RK):#{
     #k:100 d:10 smooth:2
     fast_k = int(10) #Ideal:  100-10-2
     slow_d = int(3)  #tocada: 10-3-2
     smooth = int(2)
 
-    high_column = df_RK.get(_HIGH)
-    low_column = df_RK.get(_LOW)
-    hl2_column = df_RK.get(_HL2)
-    df_new_STOCH = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k, d=slow_d, smooth_k=smooth)
-    df_new_STOCH.columns = [i[0:6].lower() for i in df_new_STOCH.columns]  # stochk  stochd
+    high_column = data_RK.get(_HIGH)
+    low_column = data_RK.get(_LOW)
+    hl2_column = data_RK.get(_HL2)
 
-    rk_size = df_RK.size
-    new_STOCH_size = df_new_STOCH.size
-    llenarEspacios = 0
-    if rk_size > new_STOCH_size: #{
-        llenarEspacios = rk_size - new_STOCH_size
-        print("*** LlenarEspacios STOCH: " + str(llenarEspacios) + " - df_RK.size:" + str(rk_size) + " - df_new_STOCH.size:" + str(new_STOCH_size))
+    df_stoch = ta_momentum.stoch(high=high_column, low=low_column, close=hl2_column, k=fast_k,d=slow_d, smooth_k=smooth)
+    df_stoch.columns = [i[0:6].lower() for i in df_stoch.columns]  # stochk  stochd
+
+    if(len(df_stoch[df_stoch.index.duplicated()]) > 0):#{
+        print("Antes - Row duplicados: ", df_stoch[df_stoch.index.duplicated()].head())
+        df_stoch = df_stoch.loc[~df_stoch.index.duplicated(), :]
+        # print("Despues - Row duplicados: ", df_stoch[df_stoch.index.duplicated()].head())
     # }
-    #
-    # for x in Range(0,llenarEspacios):
-    #     df_new_STOCH[_STOCH_K].insert(0,1)
 
-    # df_RK.insert(len(df_RK.columns), _STOCH_K, df_new_STOCH[_STOCH_K].values)
-    # df_RK.insert(len(df_RK.columns), _STOCH_D, df_new_STOCH[_STOCH_D].values)
-    # print("*** STOCH_K: \n ", df_RK.head())
+    print("*** df_stoch: \n ", df_stoch.head())
+
+    data_RK[_STOCH_K] = df_stoch[_STOCH_K]
+    data_RK[_STOCH_D] = df_stoch[_STOCH_D]
+
+    df_new_size = data_RK.size
+    llenarEspacios = 0
+    if rk_size > df_new_size: #{
+        llenarEspacios = rk_size - df_new_size
+        print("*** LlenarEspacios STOCH: " + str(llenarEspacios) + " - data_RK.size:" + str(rk_size) + " - df_new_size.size:" + str(df_new_size))
+    # }
+    print("*** STOCH_K: \n ", data_RK.head())
 #}
 
-def calcula_ADX(df_RK):#{
-    high_column = df_RK.get(_HIGH)
-    low_column = df_RK.get(_LOW)
-    hl2_column = df_RK.get(_HL2)
+def calcula_ADX(data_RK):#{
+    high_column = data_RK.get(_HIGH)
+    low_column = data_RK.get(_LOW)
+    hl2_column = data_RK.get(_HL2)
     length_DI = int(16)
     lensig_ADX = int(16)
-    df_RK = ta_trend.adx(high=high_column, low=low_column, close=hl2_column, length=length_DI, lensig=lensig_ADX)
+    data_RK = ta_trend.adx(high=high_column, low=low_column, close=hl2_column, length=length_DI, lensig=lensig_ADX)
 
-    df_RK.columns = [i[0:3].lower() for i in df_RK.columns]  #adx dmp dmn
-    print("*** ADX: \n ", df_RK)
+    data_RK.columns = [i[0:3].lower() for i in data_RK.columns]  #adx dmp dmn
+    print("*** ADX: \n ", data_RK)
 #}
 
 # main
 
-df_RK = cargaDatosCSV();
-# calcula_SMA(df_RK)
-# calcula_RSI(df_RK)
-calcula_STOCH(df_RK)
-# calcula_ADX(df_RK)
+data_RK = cargaDatosCSV();
+rk_size = data_RK.size
+
+calcula_SMA(data_RK)
+# calcula_RSI(data_RK)
+calcula_STOCH(data_RK)
+# calcula_ADX(data_RK)
